@@ -2,7 +2,6 @@
 import App from 'fusion-react';
 import {FetchToken} from 'fusion-tokens';
 import Router from 'fusion-plugin-react-router';
-import Styletron from 'fusion-plugin-styletron-react';
 import StyledComponentsPlugin from './plugins/styled-components';
 import Redux, {
   ReduxToken,
@@ -14,10 +13,11 @@ import fetch from 'unfetch';
 import reducer from './redux';
 import rpcHandlers from './rpc/handlers';
 
+
 import root from './root.js';
 
-export default () => {
-  const app = new App(root);
+export default ({render} = {}) => {
+  const app = new App(root, render);
 
   app.register(StyledComponentsPlugin);
   app.register(Router);

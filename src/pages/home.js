@@ -14,7 +14,7 @@ const Center = styled.div`
   height: 100%;
 `;
 
-const FusionStyle = styled.div`
+export const FusionStyle = styled.div`
   font-size: 80px;
   color: rgba(0,0,0,.8);
   padding-right: 30px;
