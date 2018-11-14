@@ -1,5 +1,6 @@
 // @flow
 import React, {Component} from 'react';
+import {prepared} from 'fusion-react';
 import {compose} from 'redux';
 import {connect} from 'react-redux';
 import {styled} from '../plugins/styled-components';
@@ -56,41 +57,40 @@ type PropsT = {
   user: Object,
 };
 
-class Home extends Component<PropsT> {
-  componentDidMount() {
-    this.props.getUser();
-  }
-  render() {
-    const {user} = this.props;
-    return (
-      <FullHeightDiv>
-        <style>
-          {`
-            html,body,#root{height:100%;}
-            html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:rgba(0,0,0,0);}
-            body{margin:0;}
-            button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0;}
-            input::-webkit-inner-spin-button,input::-webkit-outer-spin-button,input::-webkit-search-cancel-button,input::-webkit-search-decoration,input::-webkit-search-results-button,input::-webkit-search-results-decoration{display:none;}
-            `}
-        </style>
-        <Center>
-          <FusionStyle>
-            Hi {user ? user.name : 'Fusion User'}!
-          </FusionStyle>
-          <Center>
-            <Circle>
-              <GettingStartedLink href="https://fusionjs.com/docs/getting-started">
-                Let&apos;s Get Started
-              </GettingStartedLink>
-            </Circle>
-          </Center>
-        </Center>
-      </FullHeightDiv>
-    );
-  }
-}
+const Home = ({user}: PropsT) => (
+  <FullHeightDiv>
+    <style>
+      {`
+        html,body,#root{height:100%;}
+        html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:rgba(0,0,0,0);}
+        body{margin:0;}
+        button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0;}
+        input::-webkit-inner-spin-button,input::-webkit-outer-spin-button,input::-webkit-search-cancel-button,input::-webkit-search-decoration,input::-webkit-search-results-button,input::-webkit-search-results-decoration{display:none;}
+        `}
+    </style>
+    <Center>
+      <FusionStyle>
+        Hi {user ? user.name : 'Fusion User'}!
+      </FusionStyle>
+      <Center>
+        <Circle>
+          <GettingStartedLink href="https://fusionjs.com/docs/getting-started">
+            Let&apos;s Get Started
+          </GettingStartedLink>
+        </Circle>
+      </Center>
+    </Center>
+  </FullHeightDiv>
+);
 
 export default compose(
   connect((state) => ({user: state.user.data})),
-  withRPCRedux('getUser')
+  withRPCRedux('getUser'),
+  prepared((props) => {
+    if (props.isLoading || props.query) {
+      return Promise.resolve();
+    }
+
+    return props.getUser({});
+  })
 )(Home);
