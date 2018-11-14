@@ -1,0 +1,18 @@
+.fusion/
+.vscode/
+
+coverage/
+node_modules/
+
+# temporary jenkins files
+test/test.js.tap
+jshint.xml
+jshint-proper.xml
+
+core
+npm-debug.log
+
+dist/
+dist-tests/
+.DS_Store
+.nyc_output/
