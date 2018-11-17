@@ -14,9 +14,9 @@ import reducer from './redux';
 import rpcHandlers from './rpc/handlers';
 
 
-import root from './root.js';
+import defaultRoot from './root.js';
 
-export default ({render} = {}) => {
+export default ({root = defaultRoot, render} = {}) => {
   const app = new App(root, render);
 
   app.register(StyledComponentsPlugin);
